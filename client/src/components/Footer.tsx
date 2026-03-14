@@ -9,12 +9,20 @@ export default function Footer() {
       <div className="container">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           {/* Brand */}
-          <div className="flex items-center gap-2">
-            <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663342337625/biHYpnWi4gbAo4jVFbvk4g/zero-ai-logo_a8c58afd.webp"
-              alt="Zero AI Logo"
-              className="w-8 h-8 object-contain"
-            />
+          <div className="flex flex-col gap-1">
+            <a href="https://zeroai.vip" className="flex items-center gap-2">
+              <img
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663342337625/biHYpnWi4gbAo4jVFbvk4g/zero-ai-logo_a8c58afd.webp"
+                alt="Zero AI Logo"
+                className="w-8 h-8 object-contain"
+              />
+            </a>
+            <span
+              className="text-xs text-[oklch(0.35_0.006_265)]"
+              style={{ fontFamily: "'IBM Plex Mono', monospace" }}
+            >
+              zeroai.vip
+            </span>
           </div>
 
           {/* Links */}
