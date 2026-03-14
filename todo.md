@@ -84,3 +84,17 @@
 - [x] Logo Zero AI di IntroScreen dengan efek glow hijau
 - [x] Link "Docs" di Navbar mengarah ke /docs
 - [x] Route /docs ditambahkan di App.tsx
+
+## Fitur Lengkap (Rebuild - Maret 2026)
+- [ ] Halaman /changelog dengan versi history Zero AI
+- [ ] Halaman /blog atau /updates untuk artikel/berita
+- [ ] Contact form di halaman CTA (nama, email, pesan) dengan backend
+- [ ] Newsletter subscribe di footer (simpan ke DB)
+- [ ] Loading skeleton di semua data fetch
+- [ ] Toast notification yang lebih informatif
+- [ ] 404 page yang sesuai branding Zero AI
+- [ ] Halaman /privacy-policy dan /terms
+- [ ] SEO meta tags yang lebih lengkap (JSON-LD structured data)
+- [ ] GitHub repo: squash semua commit jadi 1 commit bersih author "Zero AI"
+- [ ] GitHub repo: description, topics, homepage, social preview image
+- [ ] README.md yang sangat lengkap dengan badges, screenshots, installation guide

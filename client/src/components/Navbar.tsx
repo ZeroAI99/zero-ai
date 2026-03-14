@@ -100,6 +100,14 @@ export default function Navbar() {
                 Docs
               </a>
             </Link>
+            <Link href="/changelog">
+              <a
+                className="text-[oklch(0.55_0.01_265)] hover:text-[oklch(0.85_0.005_265)] text-xs transition-colors duration-200"
+                style={{ fontFamily: "'DM Sans', sans-serif" }}
+              >
+                Changelog
+              </a>
+            </Link>
             <button
               onClick={() => scrollTo("#cta")}
               className="btn-primary text-xs py-2 px-4"
@@ -136,7 +144,12 @@ export default function Navbar() {
                 <span className="text-sm" style={{ fontFamily: "'DM Sans', sans-serif" }}>{item.label}</span>
               </button>
             ))}
-            <div className="pt-3 border-t border-white/[0.06] flex gap-3">
+            <div className="pt-3 border-t border-white/[0.06] flex flex-col gap-2">
+              <div className="flex gap-3">
+                <Link href="/docs"><a className="text-xs text-[oklch(0.55_0.01_265)] hover:text-[oklch(0.76_0.18_155)] transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Docs</a></Link>
+                <Link href="/changelog"><a className="text-xs text-[oklch(0.55_0.01_265)] hover:text-[oklch(0.76_0.18_155)] transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Changelog</a></Link>
+                <Link href="/privacy"><a className="text-xs text-[oklch(0.55_0.01_265)] hover:text-[oklch(0.76_0.18_155)] transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Privacy</a></Link>
+              </div>
               <button
                 onClick={() => scrollTo("#cta")}
                 className="btn-primary text-xs py-2 px-4 flex-1 justify-center"

@@ -90,16 +90,24 @@ describe("waitlist.join", () => {
 });
 
 describe("waitlist.count", () => {
-  it("returns count of waitlist entries", async () => {
+  it("returns count of waitlist entries with status breakdown", async () => {
+    const mockRows = [
+      { status: "pending" },
+      { status: "approved" },
+      { status: "pending" },
+    ];
     const mockDb = {
       select: vi.fn().mockReturnThis(),
-      from: vi.fn().mockResolvedValue([{}, {}, {}]),
+      from: vi.fn().mockResolvedValue(mockRows),
     };
     vi.mocked(getDb).mockResolvedValue(mockDb as ReturnType<typeof import("drizzle-orm/mysql2").drizzle>);
 
     const caller = appRouter.createCaller(createPublicContext());
     const result = await caller.waitlist.count();
-    expect(result.count).toBe(3);
+    expect(result.total).toBe(3);
+    expect(result.pending).toBe(2);
+    expect(result.approved).toBe(1);
+    expect(result.rejected).toBe(0);
   });
 });
 

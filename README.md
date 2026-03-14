@@ -15,6 +15,11 @@ Zero AI turns AI into a system that works *with* you — on your terms, governed
 [![X (Twitter)](https://img.shields.io/badge/Follow-%40_zeroai-black?style=flat-square&logo=x)](https://x.com/_zeroai)
 [![GitHub](https://img.shields.io/badge/GitHub-ZeroAI99-181717?style=flat-square&logo=github)](https://github.com/ZeroAI99)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react)](https://react.dev/)
+[![tRPC](https://img.shields.io/badge/tRPC-11-398CCB?style=flat-square)](https://trpc.io/)
+
+[Website](https://zeroai.vip) · [Documentation](https://zeroai.vip/docs) · [Changelog](https://zeroai.vip/changelog) · [Twitter](https://x.com/_zeroai)
 
 </div>
 
@@ -96,7 +101,28 @@ Your memory, policies, and context are stored on your own system by default. No 
 
 ---
 
+## Pages
+
+| Route | Description |
+|-------|-------------|
+| `/` | Main landing page with 7 sections |
+| `/docs` | Technical documentation (8 sections) |
+| `/changelog` | Release history with semantic versioning |
+| `/admin` | Admin dashboard — waitlist management (requires admin role) |
+| `/privacy` | Privacy policy |
+| `/terms` | Terms of service |
+
+---
+
 ## Getting Started
+
+### Prerequisites
+
+- Node.js 22+
+- pnpm 9+
+- MySQL or TiDB database
+
+### Installation
 
 ```bash
 # Clone the repository
@@ -108,6 +134,7 @@ pnpm install
 
 # Setup environment variables
 cp .env.example .env
+# Edit .env with your database URL and OAuth credentials
 
 # Push database schema
 pnpm db:push
@@ -115,6 +142,28 @@ pnpm db:push
 # Start development server
 pnpm dev
 ```
+
+### Available Scripts
+
+```bash
+pnpm dev          # Start development server
+pnpm build        # Build for production
+pnpm test         # Run Vitest tests
+pnpm db:push      # Push database schema changes
+pnpm format       # Format code with Prettier
+```
+
+### Environment Variables
+
+| Variable | Description |
+|----------|-------------|
+| `DATABASE_URL` | MySQL/TiDB connection string |
+| `JWT_SECRET` | Session cookie signing secret |
+| `VITE_APP_ID` | OAuth application ID |
+| `OAUTH_SERVER_URL` | OAuth backend base URL |
+| `VITE_OAUTH_PORTAL_URL` | OAuth login portal URL |
+| `BUILT_IN_FORGE_API_KEY` | LLM API key (server-side) |
+| `BUILT_IN_FORGE_API_URL` | LLM API base URL |
 
 ---
 

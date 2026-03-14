@@ -7,6 +7,9 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import Admin from "./pages/Admin";
 import Docs from "./pages/Docs";
+import Changelog from "./pages/Changelog";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
 import IntroScreen from "./components/IntroScreen";
 import ScrollProgress from "./components/ScrollProgress";
 import BackToTop from "./components/BackToTop";
@@ -18,6 +21,9 @@ function Router() {
       <Route path={"/"} component={Home} />
       <Route path={"/admin"} component={Admin} />
       <Route path={"/docs"} component={Docs} />
+      <Route path={"/changelog"} component={Changelog} />
+      <Route path={"/privacy"} component={Privacy} />
+      <Route path={"/terms"} component={Terms} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>
