@@ -67,3 +67,11 @@
 
 ## Domain
 - [ ] Bind custom domain zeroai.vip in Management UI Settings → Domains
+
+## Fitur Tambahan (Maret 2026)
+- [x] Logo Zero AI di IntroScreen dengan efek glow hijau
+- [x] Navbar desktop menampilkan nama section + angka (bukan hanya angka 01-07)
+- [x] Footer diperluas dengan grid 4 kolom (Brand, Product, Technology, Connect)
+- [x] Footer menampilkan nama brand ZERO AI + deskripsi singkat
+- [x] GitHub repo rebuild dengan satu commit bersih, author "Zero AI"
+- [x] GitHub topics ditambahkan (ai, personal-ai, react, typescript, trpc, dll)
