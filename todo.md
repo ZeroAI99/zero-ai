@@ -98,3 +98,10 @@
 - [ ] GitHub repo: squash semua commit jadi 1 commit bersih author "Zero AI"
 - [ ] GitHub repo: description, topics, homepage, social preview image
 - [ ] README.md yang sangat lengkap dengan badges, screenshots, installation guide
+
+## Email & Live Counter (Maret 2026)
+- [x] Ganti logo dengan URL baru https://iili.io/q1H6tnV.webp (upload ke CDN)
+- [x] Resend email integration untuk konfirmasi waitlist otomatis
+- [x] Email template HTML branded Zero AI dengan nomor antrian
+- [x] Counter waitlist live di Hero section (real-time dari database, refresh setiap 30s)
+- [x] Push ke GitHub dengan author Zero AI

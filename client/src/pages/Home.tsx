@@ -11,6 +11,7 @@ import StatsBar from "@/components/StatsBar";
 import CursorGlow from "@/components/CursorGlow";
 import WaitlistModal from "@/components/WaitlistModal";
 import AIChatDemo from "@/components/AIChatDemo";
+import { trpc } from "@/lib/trpc";
 
 const HERO_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663342337625/biHYpnWi4gbAo4jVFbvk4g/zero-ai-hero-bg-NGi9BN85d6de2rtPtNunGB.webp";
 const MEMORY_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663342337625/biHYpnWi4gbAo4jVFbvk4g/zero-ai-memory-visual-KdKdmAhQTKTJnXpqiq74e3.webp";
@@ -100,6 +101,12 @@ export default function Home() {
   const [showChatDemo, setShowChatDemo] = useState(false);
   const [heroVisible, setHeroVisible] = useState(false);
 
+  // Live waitlist counter
+  const { data: waitlistCount } = trpc.waitlist.count.useQuery(undefined, {
+    refetchInterval: 30_000, // refresh every 30s
+    staleTime: 15_000,
+  });
+
   useEffect(() => {
     const t = setTimeout(() => setHeroVisible(true), 100);
     return () => clearTimeout(t);
@@ -163,7 +170,7 @@ export default function Home() {
 
             {/* CTAs */}
             <div
-              className={`flex flex-wrap gap-4 mb-16 transition-all duration-700 delay-400 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+              className={`flex flex-wrap gap-4 mb-6 transition-all duration-700 delay-400 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
             >
               <button
                 onClick={() => setShowWaitlist(true)}
@@ -180,6 +187,35 @@ export default function Home() {
               >
                 Read Docs
               </button>
+            </div>
+
+            {/* Live waitlist counter */}
+            <div
+              className={`mb-10 transition-all duration-700 delay-[450ms] ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+            >
+              <div className="flex items-center gap-2">
+                {/* Pulsing green dot */}
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[oklch(0.76_0.18_155)] opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[oklch(0.76_0.18_155)]" />
+                </span>
+                {waitlistCount && waitlistCount.total > 0 ? (
+                  <span
+                    className="text-xs text-[oklch(0.55_0.01_265)]"
+                    style={{ fontFamily: "'IBM Plex Mono', monospace" }}
+                  >
+                    <span className="text-[oklch(0.76_0.18_155)] font-semibold">{waitlistCount.total.toLocaleString()}</span>
+                    {" "}people already on the waitlist
+                  </span>
+                ) : (
+                  <span
+                    className="text-xs text-[oklch(0.45_0.008_265)]"
+                    style={{ fontFamily: "'IBM Plex Mono', monospace" }}
+                  >
+                    Be among the first to join
+                  </span>
+                )}
+              </div>
             </div>
 
             {/* Agreement prompt */}

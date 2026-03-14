@@ -8,7 +8,7 @@
 import { useState, useEffect, useRef } from "react";
 import ParticleCanvas from "./ParticleCanvas";
 
-const LOGO = "https://d2xsxph8kpxj0f.cloudfront.net/310519663342337625/biHYpnWi4gbAo4jVFbvk4g/zero-ai-logo-new_0acbc76c.webp";
+const LOGO = "https://d2xsxph8kpxj0f.cloudfront.net/310519663342337625/biHYpnWi4gbAo4jVFbvk4g/zero-ai-logo-v2_57ca5299.webp";
 
 const NAV_SECTIONS = [
   { label: "Introduction", href: "introduction" },

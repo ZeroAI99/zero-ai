@@ -5,8 +5,9 @@ import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { invokeLLM } from "./_core/llm";
 import { notifyOwner } from "./_core/notification";
 import { getDb } from "./db";
+import { sendWaitlistConfirmation } from "./email";
 import { waitlist } from "../drizzle/schema";
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, count as sqlCount } from "drizzle-orm";
 import { z } from "zod";
 
 export const appRouter = router({
@@ -57,13 +58,25 @@ export const appRouter = router({
           status: "pending",
         });
 
+        // Get queue position (total count after insert)
+        const allRows = await db.select().from(waitlist);
+        const queueNumber = allRows.length;
+
+        // Send confirmation email (non-blocking — don't fail if email fails)
+        sendWaitlistConfirmation({
+          email: input.email,
+          name: input.name,
+          role: input.role,
+          queueNumber,
+        }).catch(err => console.error('[Email] Confirmation failed:', err));
+
         // Notify owner about new waitlist signup
         await notifyOwner({
-          title: "New Early Access Request",
-          content: `**${input.name ?? "Anonymous"}** (${input.email}) — ${input.role ?? "No role"}\n\n${input.message ?? "No message"}`,
+          title: `New Early Access Request (#${queueNumber})`,
+          content: `**${input.name ?? "Anonymous"}** (${input.email}) — ${input.role ?? "No role"}\nQueue position: #${queueNumber}\n\n${input.message ?? "No message"}`,
         });
 
-        return { success: true, alreadyJoined: false };
+        return { success: true, alreadyJoined: false, queueNumber };
       }),
 
     // Admin: get count with status breakdown
