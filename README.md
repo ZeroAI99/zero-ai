@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663342337625/biHYpnWi4gbAo4jVFbvk4g/zero-ai-logo_a8c58afd.webp" alt="Zero AI Logo" width="120" />
+<img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663342337625/biHYpnWi4gbAo4jVFbvk4g/zero-ai-logo-new_0acbc76c.webp" alt="Zero AI Logo" width="120" />
 
 # Zero AI
 

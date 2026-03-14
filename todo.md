@@ -61,5 +61,9 @@
 - [x] OG/Twitter meta tags
 - [x] Canonical URL pointing to zeroai.vip
 
+## Logo Update
+- [x] Upload new Zero AI logo (green circle + lightning bolt + ZERO AI text) to CDN
+- [x] Replace logo in Navbar, Footer, Admin Dashboard, favicon, OG/Twitter meta tags, README
+
 ## Domain
 - [ ] Bind custom domain zeroai.vip in Management UI Settings → Domains

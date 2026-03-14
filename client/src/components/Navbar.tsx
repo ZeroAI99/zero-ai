@@ -65,7 +65,7 @@ export default function Navbar() {
             className="flex items-center gap-2 group"
           >
             <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663342337625/biHYpnWi4gbAo4jVFbvk4g/zero-ai-logo_a8c58afd.webp"
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663342337625/biHYpnWi4gbAo4jVFbvk4g/zero-ai-logo-new_0acbc76c.webp"
               alt="Zero AI Logo"
               className="w-8 h-8 object-contain"
             />
