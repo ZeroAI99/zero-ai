@@ -7,6 +7,8 @@
 import { useState, useEffect, useRef } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import StatsBar from "@/components/StatsBar";
+import CursorGlow from "@/components/CursorGlow";
 
 const HERO_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663342337625/biHYpnWi4gbAo4jVFbvk4g/zero-ai-hero-bg-NGi9BN85d6de2rtPtNunGB.webp";
 const MEMORY_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663342337625/biHYpnWi4gbAo4jVFbvk4g/zero-ai-memory-visual-KdKdmAhQTKTJnXpqiq74e3.webp";
@@ -106,6 +108,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[oklch(0.075_0.008_265)] text-[oklch(0.93_0.005_265)]">
+      <CursorGlow />
       <Navbar />
 
       {/* ─── HERO ─────────────────────────────────────────────────────────── */}
@@ -231,6 +234,9 @@ export default function Home() {
           <div className="w-px h-8 bg-gradient-to-b from-[oklch(0.45_0.008_265)] to-transparent" />
         </div>
       </div>
+
+      {/* ─── STATS BAR ────────────────────────────────────────────────────── */}
+      <StatsBar />
 
       {/* ─── INTRODUCTION ─────────────────────────────────────────────────── */}
       <Section id="introduction" className="py-24 border-t border-white/[0.06]">

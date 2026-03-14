@@ -5,6 +5,7 @@
  */
 
 import { useState, useEffect } from "react";
+import ParticleCanvas from "./ParticleCanvas";
 
 const NAV_SECTIONS = [
   { label: "Introduction", href: "introduction" },
@@ -28,6 +29,7 @@ export default function IntroScreen({ onEnter }: IntroScreenProps) {
   const [showNav, setShowNav] = useState(false);
   const [showSocial, setShowSocial] = useState(false);
   const [answered, setAnswered] = useState<"yes" | "no" | null>(null);
+  const [skipped] = useState(() => sessionStorage.getItem("zeroai_intro_seen") === "1");
 
   const TEXT1 = "> AI generates text. You do all the work.";
   const TEXT2 = "> Prompt. Copy. Paste. Verify. Repeat.";
@@ -57,8 +59,15 @@ export default function IntroScreen({ onEnter }: IntroScreenProps) {
     return () => clearInterval(t1);
   }, []);
 
+  useEffect(() => {
+    if (skipped) {
+      onEnter();
+    }
+  }, [skipped, onEnter]);
+
   const handleAnswer = (choice: "yes" | "no") => {
     setAnswered(choice);
+    sessionStorage.setItem("zeroai_intro_seen", "1");
     setTimeout(() => onEnter(), 800);
   };
 
@@ -82,8 +91,11 @@ export default function IntroScreen({ onEnter }: IntroScreenProps) {
         opacity: answered ? 0 : 1,
       }}
     >
+      {/* Particle canvas */}
+      <ParticleCanvas />
+
       {/* Heavy dark overlay */}
-      <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.82)" }} />
+      <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.72)" }} />
 
       <div className="relative z-10 w-full max-w-lg px-6 flex flex-col items-center text-center">
 

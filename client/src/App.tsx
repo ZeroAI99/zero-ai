@@ -6,6 +6,8 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import IntroScreen from "./components/IntroScreen";
+import ScrollProgress from "./components/ScrollProgress";
+import BackToTop from "./components/BackToTop";
 import { useState } from "react";
 
 function Router() {
@@ -26,9 +28,11 @@ function App() {
       <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
           <Toaster />
+          <ScrollProgress />
           {introVisible && (
             <IntroScreen onEnter={() => setIntroVisible(false)} />
           )}
+          {!introVisible && <BackToTop />}
           <Router />
         </TooltipProvider>
       </ThemeProvider>
