@@ -135,7 +135,6 @@ export default function Navbar() {
                 onClick={() => scrollTo(item.href)}
                 className="flex items-center gap-3 py-2.5 text-left text-[oklch(0.55_0.01_265)] hover:text-[oklch(0.93_0.005_265)] transition-colors"
               >
-                <span className="text-[oklch(0.76_0.18_155)] text-xs" style={{ fontFamily: "'IBM Plex Mono', monospace" }}>{item.num}</span>
                 <span className="text-sm" style={{ fontFamily: "'DM Sans', sans-serif" }}>{item.label}</span>
               </button>
             ))}
