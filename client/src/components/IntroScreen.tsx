@@ -2,10 +2,13 @@
  * ZERO AI — IntroScreen Component
  * Design: Exact match to odei.ai intro style
  * Full screen, neural background, large YES/NO buttons, section grid, social icons
+ * Premium fade-out: multi-layer dissolve with glitch flash + blur + scale
  */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import ParticleCanvas from "./ParticleCanvas";
+
+const LOGO = "https://d2xsxph8kpxj0f.cloudfront.net/310519663342337625/biHYpnWi4gbAo4jVFbvk4g/zero-ai-logo-new_0acbc76c.webp";
 
 const NAV_SECTIONS = [
   { label: "Introduction", href: "introduction" },
@@ -32,6 +35,10 @@ export default function IntroScreen({ onEnter }: IntroScreenProps) {
   const [answered, setAnswered] = useState<"yes" | "no" | null>(null);
   const [cursorVisible, setCursorVisible] = useState(true);
   const [skipped] = useState(() => sessionStorage.getItem("zeroai_intro_seen") === "1");
+
+  // Fade-out state machine: idle → glitch → dissolve → done
+  const [exitPhase, setExitPhase] = useState<"idle" | "glitch" | "dissolve" | "done">("idle");
+  const exitTimers = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   const TEXT1 = "> AI generates text. You do all the work.";
   const TEXT2 = "> Prompt. Copy. Paste. Verify. Repeat.";
@@ -73,31 +80,73 @@ export default function IntroScreen({ onEnter }: IntroScreenProps) {
     if (skipped) onEnter();
   }, [skipped, onEnter]);
 
-  const handleAnswer = (choice: "yes" | "no") => {
+  // Cleanup exit timers on unmount
+  useEffect(() => {
+    return () => exitTimers.current.forEach(clearTimeout);
+  }, []);
+
+  const triggerExit = (choice: "yes" | "no") => {
     setAnswered(choice);
     sessionStorage.setItem("zeroai_intro_seen", "1");
-    setTimeout(() => onEnter(), 700);
+
+    // Phase 1: glitch flash at 0ms
+    setExitPhase("glitch");
+
+    // Phase 2: dissolve at 120ms
+    const t1 = setTimeout(() => setExitPhase("dissolve"), 120);
+    // Phase 3: call onEnter at 900ms (after dissolve completes)
+    const t2 = setTimeout(() => {
+      setExitPhase("done");
+      onEnter();
+    }, 900);
+
+    exitTimers.current.push(t1, t2);
   };
 
   const scrollToSection = (id: string) => {
     sessionStorage.setItem("zeroai_intro_seen", "1");
-    onEnter();
-    setTimeout(() => {
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 500);
+    setExitPhase("glitch");
+    const t1 = setTimeout(() => setExitPhase("dissolve"), 120);
+    const t2 = setTimeout(() => {
+      setExitPhase("done");
+      onEnter();
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
+    }, 900);
+    exitTimers.current.push(t1, t2);
   };
 
   const mono = "'IBM Plex Mono', monospace";
 
+  // Compute container styles based on exit phase
+  const containerStyle: React.CSSProperties = {
+    background: "#000",
+    // Glitch phase: brief white flash + horizontal skew
+    ...(exitPhase === "glitch" && {
+      filter: "brightness(2.5) saturate(0) blur(1px)",
+      transform: "skewX(-1.5deg) scale(1.01)",
+      transition: "filter 0.08s ease, transform 0.08s ease",
+    }),
+    // Dissolve phase: fade + scale up + blur
+    ...(exitPhase === "dissolve" && {
+      opacity: 0,
+      filter: "blur(18px) brightness(0.3)",
+      transform: "scale(1.06)",
+      transition: "opacity 0.75s cubic-bezier(0.4, 0, 1, 1), filter 0.75s ease, transform 0.75s ease",
+    }),
+    // Done phase: fully hidden
+    ...(exitPhase === "done" && {
+      opacity: 0,
+      pointerEvents: "none",
+    }),
+  };
+
   return (
     <div
       className="fixed inset-0 z-[100] flex flex-col overflow-hidden"
-      style={{
-        background: "#000",
-        transition: answered ? "opacity 0.6s ease" : undefined,
-        opacity: answered ? 0 : 1,
-      }}
+      style={containerStyle}
     >
       {/* Particle canvas */}
       <ParticleCanvas />
@@ -105,8 +154,44 @@ export default function IntroScreen({ onEnter }: IntroScreenProps) {
       {/* Subtle dark overlay to keep text readable */}
       <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.55)" }} />
 
+      {/* Glitch scan-line overlay — only visible during glitch phase */}
+      {exitPhase === "glitch" && (
+        <div
+          className="absolute inset-0 z-20 pointer-events-none"
+          style={{
+            background: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,100,0.04) 2px, rgba(0,255,100,0.04) 4px)",
+            mixBlendMode: "screen",
+          }}
+        />
+      )}
+
       {/* Main content — vertically centered, left-aligned like odei.ai */}
       <div className="relative z-10 flex flex-col justify-center flex-1 w-full max-w-2xl mx-auto px-6 md:px-10">
+
+        {/* Logo */}
+        <div className="flex flex-col items-center mb-6">
+          <div
+            className="mb-2"
+            style={{
+              filter: "drop-shadow(0 0 16px oklch(0.76 0.18 155 / 0.55))",
+              transition: "opacity 0.5s ease",
+              opacity: showHeadline ? 1 : 0,
+            }}
+          >
+            <img src={LOGO} alt="Zero AI" className="w-14 h-14 object-contain" />
+          </div>
+          <span
+            className="text-xs tracking-[0.3em] uppercase"
+            style={{
+              fontFamily: mono,
+              color: "oklch(0.76 0.18 155 / 0.7)",
+              transition: "opacity 0.5s ease 0.1s",
+              opacity: showHeadline ? 1 : 0,
+            }}
+          >
+            ZERO AI
+          </span>
+        </div>
 
         {/* Terminal lines */}
         <div className="mb-8">
@@ -186,7 +271,7 @@ export default function IntroScreen({ onEnter }: IntroScreenProps) {
           {answered === null ? (
             <>
               <button
-                onClick={() => handleAnswer("yes")}
+                onClick={() => triggerExit("yes")}
                 className="flex-1 max-w-[180px] py-4 text-base font-bold tracking-widest transition-all duration-200"
                 style={{
                   fontFamily: mono,
@@ -207,7 +292,7 @@ export default function IntroScreen({ onEnter }: IntroScreenProps) {
                 [ YES ]
               </button>
               <button
-                onClick={() => handleAnswer("no")}
+                onClick={() => triggerExit("no")}
                 className="flex-1 max-w-[180px] py-4 text-base font-bold tracking-widest transition-all duration-200"
                 style={{
                   fontFamily: mono,

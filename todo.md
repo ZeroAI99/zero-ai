@@ -75,3 +75,12 @@
 - [x] Footer menampilkan nama brand ZERO AI + deskripsi singkat
 - [x] GitHub repo rebuild dengan satu commit bersih, author "Zero AI"
 - [x] GitHub topics ditambahkan (ai, personal-ai, react, typescript, trpc, dll)
+
+## Docs & Transitions
+- [x] Halaman /docs dengan 8 seksi teknis (Overview, Architecture, Constitutional Memory, Governance Engine, Agency Levels, Data Model, API Reference, Technical Roadmap)
+- [x] Sidebar navigasi sticky di halaman /docs dengan anchor links
+- [x] Code blocks dengan syntax highlighting dan tombol copy
+- [x] Animasi fade-out premium di IntroScreen: glitch flash + blur dissolve + scale
+- [x] Logo Zero AI di IntroScreen dengan efek glow hijau
+- [x] Link "Docs" di Navbar mengarah ke /docs
+- [x] Route /docs ditambahkan di App.tsx

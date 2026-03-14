@@ -5,6 +5,7 @@
  */
 
 import { useState, useEffect } from "react";
+import { Link } from "wouter";
 
 const NAV_ITEMS = [
   { label: "Introduction", href: "#introduction", num: "01" },
@@ -91,13 +92,14 @@ export default function Navbar() {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-3">
-            <button
-              onClick={() => scrollTo("#roadmap")}
-              className="text-[oklch(0.55_0.01_265)] hover:text-[oklch(0.85_0.005_265)] text-xs transition-colors duration-200"
-              style={{ fontFamily: "'DM Sans', sans-serif" }}
-            >
-              Read Docs
-            </button>
+            <Link href="/docs">
+              <a
+                className="text-[oklch(0.55_0.01_265)] hover:text-[oklch(0.85_0.005_265)] text-xs transition-colors duration-200"
+                style={{ fontFamily: "'DM Sans', sans-serif" }}
+              >
+                Docs
+              </a>
+            </Link>
             <button
               onClick={() => scrollTo("#cta")}
               className="btn-primary text-xs py-2 px-4"
