@@ -11,7 +11,7 @@ vi.mock("resend", () => {
   };
 });
 
-import { sendWaitlistConfirmation } from "./email";
+import { sendWaitlistConfirmation, sendAdminNotification } from "./email";
 
 describe("sendWaitlistConfirmation", () => {
   beforeEach(() => {
@@ -78,5 +78,53 @@ describe("sendWaitlistConfirmation", () => {
     });
 
     expect(result).toBe(false);
+  });
+});
+
+describe("sendAdminNotification", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it("returns false when RESEND_API_KEY is not set", async () => {
+    const originalKey = process.env.RESEND_API_KEY;
+    delete process.env.RESEND_API_KEY;
+
+    const result = await sendAdminNotification({
+      email: "user@example.com",
+      name: "Test User",
+      role: "Founder",
+      queueNumber: 5,
+    });
+
+    expect(result).toBe(false);
+    process.env.RESEND_API_KEY = originalKey;
+  });
+
+  it("sends admin notification email and returns true", async () => {
+    process.env.RESEND_API_KEY = "re_test_key_123";
+    process.env.RESEND_FROM_EMAIL = "Zero AI <hello@zeroai.vip>";
+    process.env.ADMIN_NOTIFICATION_EMAIL = "hello@zeroai.vip";
+
+    const result = await sendAdminNotification({
+      email: "newuser@example.com",
+      name: "New User",
+      role: "Builder",
+      message: "Excited to try Zero AI!",
+      queueNumber: 42,
+    });
+
+    expect(result).toBe(true);
+  });
+
+  it("handles missing optional fields gracefully", async () => {
+    process.env.RESEND_API_KEY = "re_test_key_123";
+
+    const result = await sendAdminNotification({
+      email: "minimal@example.com",
+      queueNumber: 1,
+    });
+
+    expect(result).toBe(true);
   });
 });

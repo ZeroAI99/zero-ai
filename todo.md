@@ -105,3 +105,8 @@
 - [x] Email template HTML branded Zero AI dengan nomor antrian
 - [x] Counter waitlist live di Hero section (real-time dari database, refresh setiap 30s)
 - [x] Push ke GitHub dengan author Zero AI
+
+## Blog & Admin Email (Maret 2026)
+- [ ] Verifikasi domain zeroai.vip di Resend (DNS records)
+- [ ] Halaman /blog dengan artikel-artikel update Zero AI
+- [ ] Email notifikasi admin ke hello@zeroai.vip setiap pendaftar baru

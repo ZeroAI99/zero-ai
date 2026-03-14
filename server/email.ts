@@ -6,7 +6,7 @@
 
 import { Resend } from "resend";
 
-const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663342337625/biHYpnWi4gbAo4jVFbvk4g/zero-ai-logo-v2_57ca5299.webp";
+const LOGO_URL = "https://iili.io/q1H6tnV.webp";
 
 function getResend(): Resend | null {
   const apiKey = process.env.RESEND_API_KEY;
@@ -184,6 +184,141 @@ export async function sendWaitlistConfirmation({
     return true;
   } catch (err) {
     console.error("[Email] Failed to send confirmation:", err);
+    return false;
+  }
+}
+
+/**
+ * Send admin notification email when a new user joins the waitlist
+ */
+export async function sendAdminNotification({
+  email,
+  name,
+  role,
+  message,
+  queueNumber,
+}: {
+  email: string;
+  name?: string | null;
+  role?: string | null;
+  message?: string | null;
+  queueNumber: number;
+}): Promise<boolean> {
+  const resend = getResend();
+  if (!resend) return false;
+
+  const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL ?? "hello@zeroai.vip";
+  const fromEmail = process.env.RESEND_FROM_EMAIL ?? "Zero AI <hello@zeroai.vip>";
+  const now = new Date().toISOString();
+
+  const html = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>New Waitlist Signup — Zero AI</title>
+</head>
+<body style="margin:0;padding:0;background-color:#0a0a0f;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0a0a0f;padding:40px 20px;">
+    <tr>
+      <td align="center">
+        <table width="520" cellpadding="0" cellspacing="0" style="max-width:520px;width:100%;">
+
+          <!-- Header -->
+          <tr>
+            <td style="padding-bottom:24px;">
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td>
+                    <img src="${LOGO_URL}" alt="Zero AI" width="32" height="32" style="display:inline-block;vertical-align:middle;border-radius:4px;" />
+                    <span style="vertical-align:middle;margin-left:10px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#3d3d4a;font-family:'Courier New',monospace;">ZERO AI ADMIN</span>
+                  </td>
+                  <td align="right">
+                    <span style="display:inline-block;background-color:rgba(0,255,65,0.08);border:1px solid rgba(0,255,65,0.25);color:#00ff41;font-size:10px;font-family:'Courier New',monospace;letter-spacing:0.1em;padding:4px 10px;border-radius:2px;">NEW SIGNUP</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Card -->
+          <tr>
+            <td style="background-color:#111118;border:1px solid rgba(255,255,255,0.06);border-radius:4px;padding:32px;">
+
+              <h2 style="margin:0 0 20px;font-size:18px;font-weight:700;color:#eeeef5;">
+                New Waitlist Signup <span style="color:#00ff41;">#${queueNumber}</span>
+              </h2>
+
+              <!-- Details table -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px;">
+                ${[
+                  ["Name", name ?? "—"],
+                  ["Email", email],
+                  ["Role", role ?? "—"],
+                  ["Queue Position", `#${queueNumber}`],
+                  ["Timestamp", now],
+                ].map(([label, value]) => `
+                <tr>
+                  <td style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);width:120px;">
+                    <span style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#3d3d4a;font-family:'Courier New',monospace;">${label}</span>
+                  </td>
+                  <td style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+                    <span style="font-size:13px;color:#c8c8d4;">${value}</span>
+                  </td>
+                </tr>`).join("")}
+              </table>
+
+              ${message ? `
+              <!-- Message -->
+              <div style="background-color:#0d0d14;border:1px solid rgba(255,255,255,0.04);border-radius:4px;padding:16px;margin-bottom:20px;">
+                <p style="margin:0 0 6px;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#3d3d4a;font-family:'Courier New',monospace;">Message</p>
+                <p style="margin:0;font-size:13px;color:#8888a0;line-height:1.6;">${message}</p>
+              </div>` : ""}
+
+              <!-- Action buttons -->
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td>
+                    <a href="https://zeroai.vip/admin" style="display:inline-block;background-color:transparent;border:1px solid rgba(0,255,65,0.4);color:#00ff41;font-size:11px;font-family:'Courier New',monospace;letter-spacing:0.08em;padding:10px 20px;border-radius:2px;text-decoration:none;margin-right:10px;">View Admin Dashboard →</a>
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:20px 0 0;">
+              <p style="margin:0;font-size:10px;color:#2d2d3a;font-family:'Courier New',monospace;">This is an automated notification from Zero AI. Do not reply to this email.</p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+  `.trim();
+
+  try {
+    const result = await resend.emails.send({
+      from: fromEmail,
+      to: adminEmail,
+      subject: `[Zero AI] New waitlist signup: ${name ?? email} (#${queueNumber})`,
+      html,
+    });
+
+    if (result.error) {
+      console.error("[Email] Admin notification error:", result.error);
+      return false;
+    }
+
+    console.log(`[Email] Admin notification sent for signup #${queueNumber}`);
+    return true;
+  } catch (err) {
+    console.error("[Email] Failed to send admin notification:", err);
     return false;
   }
 }

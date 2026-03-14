@@ -10,6 +10,8 @@ import Docs from "./pages/Docs";
 import Changelog from "./pages/Changelog";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import IntroScreen from "./components/IntroScreen";
 import ScrollProgress from "./components/ScrollProgress";
 import BackToTop from "./components/BackToTop";
@@ -24,6 +26,8 @@ function Router() {
       <Route path={"/changelog"} component={Changelog} />
       <Route path={"/privacy"} component={Privacy} />
       <Route path={"/terms"} component={Terms} />
+      <Route path={"/blog/:slug"} component={BlogPost} />
+      <Route path={"/blog"} component={Blog} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>

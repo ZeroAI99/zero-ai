@@ -66,7 +66,7 @@ export default function Navbar() {
             className="flex items-center gap-2 group"
           >
             <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663342337625/biHYpnWi4gbAo4jVFbvk4g/zero-ai-logo-v2_57ca5299.webp"
+              src="https://iili.io/q1H6tnV.webp"
               alt="Zero AI Logo"
               className="w-8 h-8 object-contain"
             />
@@ -106,6 +106,14 @@ export default function Navbar() {
                 style={{ fontFamily: "'DM Sans', sans-serif" }}
               >
                 Changelog
+              </a>
+            </Link>
+            <Link href="/blog">
+              <a
+                className="text-[oklch(0.55_0.01_265)] hover:text-[oklch(0.85_0.005_265)] text-xs transition-colors duration-200"
+                style={{ fontFamily: "'DM Sans', sans-serif" }}
+              >
+                Blog
               </a>
             </Link>
             <button
@@ -148,6 +156,7 @@ export default function Navbar() {
               <div className="flex gap-3">
                 <Link href="/docs"><a className="text-xs text-[oklch(0.55_0.01_265)] hover:text-[oklch(0.76_0.18_155)] transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Docs</a></Link>
                 <Link href="/changelog"><a className="text-xs text-[oklch(0.55_0.01_265)] hover:text-[oklch(0.76_0.18_155)] transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Changelog</a></Link>
+                <Link href="/blog"><a className="text-xs text-[oklch(0.55_0.01_265)] hover:text-[oklch(0.76_0.18_155)] transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Blog</a></Link>
                 <Link href="/privacy"><a className="text-xs text-[oklch(0.55_0.01_265)] hover:text-[oklch(0.76_0.18_155)] transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Privacy</a></Link>
               </div>
               <button

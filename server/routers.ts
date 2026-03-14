@@ -5,7 +5,7 @@ import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { invokeLLM } from "./_core/llm";
 import { notifyOwner } from "./_core/notification";
 import { getDb } from "./db";
-import { sendWaitlistConfirmation } from "./email";
+import { sendWaitlistConfirmation, sendAdminNotification } from "./email";
 import { waitlist } from "../drizzle/schema";
 import { eq, desc, count as sqlCount } from "drizzle-orm";
 import { z } from "zod";
@@ -70,11 +70,20 @@ export const appRouter = router({
           queueNumber,
         }).catch(err => console.error('[Email] Confirmation failed:', err));
 
-        // Notify owner about new waitlist signup
+        // Notify owner about new waitlist signup (in-app notification)
         await notifyOwner({
           title: `New Early Access Request (#${queueNumber})`,
           content: `**${input.name ?? "Anonymous"}** (${input.email}) — ${input.role ?? "No role"}\nQueue position: #${queueNumber}\n\n${input.message ?? "No message"}`,
         });
+
+        // Send admin email notification (non-blocking)
+        sendAdminNotification({
+          email: input.email,
+          name: input.name,
+          role: input.role,
+          message: input.message,
+          queueNumber,
+        }).catch(err => console.error('[Email] Admin notification failed:', err));
 
         return { success: true, alreadyJoined: false, queueNumber };
       }),
