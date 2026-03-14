@@ -49,7 +49,9 @@ export default function Footer() {
           {/* Social */}
           <div className="flex items-center gap-4">
             <a
-              href="#"
+              href="https://x.com/_zeroai"
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label="Twitter / X"
               className="w-8 h-8 border border-white/[0.08] rounded-sm flex items-center justify-center text-[oklch(0.45_0.008_265)] hover:text-[oklch(0.76_0.18_155)] hover:border-[oklch(0.76_0.18_155/0.3)] transition-all duration-200"
             >
