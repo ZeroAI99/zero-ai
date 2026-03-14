@@ -9,6 +9,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StatsBar from "@/components/StatsBar";
 import CursorGlow from "@/components/CursorGlow";
+import WaitlistModal from "@/components/WaitlistModal";
+import AIChatDemo from "@/components/AIChatDemo";
 
 const HERO_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663342337625/biHYpnWi4gbAo4jVFbvk4g/zero-ai-hero-bg-NGi9BN85d6de2rtPtNunGB.webp";
 const MEMORY_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663342337625/biHYpnWi4gbAo4jVFbvk4g/zero-ai-memory-visual-KdKdmAhQTKTJnXpqiq74e3.webp";
@@ -94,6 +96,8 @@ function Section({ id, children, className = "" }: { id?: string; children: Reac
 
 export default function Home() {
   const [agreed, setAgreed] = useState<boolean | null>(null);
+  const [showWaitlist, setShowWaitlist] = useState(false);
+  const [showChatDemo, setShowChatDemo] = useState(false);
   const [heroVisible, setHeroVisible] = useState(false);
 
   useEffect(() => {
@@ -108,6 +112,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[oklch(0.075_0.008_265)] text-[oklch(0.93_0.005_265)]">
+      {showWaitlist && <WaitlistModal onClose={() => setShowWaitlist(false)} />}
       <CursorGlow />
       <Navbar />
 
@@ -161,7 +166,7 @@ export default function Home() {
               className={`flex flex-wrap gap-4 mb-16 transition-all duration-700 delay-400 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
             >
               <button
-                onClick={() => scrollTo("cta")}
+                onClick={() => setShowWaitlist(true)}
                 className="btn-primary"
               >
                 Request Early Access
@@ -743,6 +748,46 @@ export default function Home() {
         </div>
       </Section>
 
+      {/* ─── AI CHAT DEMO ─────────────────────────────────────────────────── */}
+      <Section className="py-24 border-t border-white/[0.06]">
+        <div className="container">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <span className="section-number">Live Demo</span>
+                <span className="accent-line" />
+              </div>
+              <h2
+                className="font-bold leading-tight mb-4"
+                style={{
+                  fontFamily: "'Syne', sans-serif",
+                  fontSize: "clamp(1.75rem, 3.5vw, 2.75rem)",
+                  color: "oklch(0.93 0.005 265)",
+                }}
+              >
+                Talk to{" "}
+                <span style={{ color: "oklch(0.76 0.18 155)" }}>Zero AI</span>
+              </h2>
+              <p
+                className="text-[oklch(0.55_0.01_265)] leading-relaxed mb-6"
+                style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300 }}
+              >
+                Experience the Zero AI persona firsthand. Ask about Constitutional Memory, Governance Engine, or what it means to own your AI infrastructure.
+              </p>
+              <p
+                className="text-xs text-[oklch(0.35_0.006_265)]"
+                style={{ fontFamily: "'IBM Plex Mono', monospace" }}
+              >
+                &gt; This is a live preview — powered by the Zero AI system prompt.
+              </p>
+            </div>
+            <div>
+              <AIChatDemo />
+            </div>
+          </div>
+        </div>
+      </Section>
+
       {/* ─── MEMORY ───────────────────────────────────────────────────────── */}
       <Section id="memory" className="py-24 border-t border-white/[0.06]">
         <div className="container">
@@ -1125,10 +1170,8 @@ export default function Home() {
             {/* CTA Button */}
             <div className="w-full max-w-lg mb-4">
               <div className="border border-[oklch(0.76_0.18_155/0.4)] rounded-sm p-5 bg-[oklch(0.76_0.18_155/0.04)]">
-                <a
-                  href="https://x.com/_zeroai"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => setShowWaitlist(true)}
                   className="block w-full py-4 text-center font-semibold text-base tracking-wide transition-all duration-200 hover:bg-[oklch(0.76_0.18_155/0.08)] rounded-sm"
                   style={{
                     fontFamily: "'IBM Plex Mono', monospace",
@@ -1137,7 +1180,7 @@ export default function Home() {
                   }}
                 >
                   Request Early Access →
-                </a>
+                </button>
                 <p
                   className="text-xs text-[oklch(0.35_0.006_265)] mt-3 text-center"
                   style={{ fontFamily: "'IBM Plex Mono', monospace" }}
