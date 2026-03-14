@@ -66,23 +66,38 @@ export const appRouter = router({
         return { success: true, alreadyJoined: false };
       }),
 
-    // Admin: list all waitlist entries
-    list: protectedProcedure.query(async ({ ctx }) => {
-      if (ctx.user?.role !== "admin") {
-        throw new Error("Forbidden");
-      }
-      const db = await getDb();
-      if (!db) return [];
-      return db.select().from(waitlist).orderBy(desc(waitlist.createdAt));
-    }),
-
-    // Admin: get count
+    // Admin: get count with status breakdown
     count: publicProcedure.query(async () => {
       const db = await getDb();
-      if (!db) return { count: 0 };
+      if (!db) return { total: 0, pending: 0, approved: 0, rejected: 0 };
       const rows = await db.select().from(waitlist);
-      return { count: rows.length };
+      return {
+        total: rows.length,
+        pending: rows.filter(r => r.status === 'pending').length,
+        approved: rows.filter(r => r.status === 'approved').length,
+        rejected: rows.filter(r => r.status === 'rejected').length,
+      };
     }),
+
+    // Admin: list with wrapper
+    list: protectedProcedure.query(async ({ ctx }) => {
+      if (ctx.user?.role !== 'admin') throw new Error('Forbidden');
+      const db = await getDb();
+      if (!db) return { entries: [] };
+      const entries = await db.select().from(waitlist).orderBy(desc(waitlist.createdAt));
+      return { entries };
+    }),
+
+    // Admin: update status
+    updateStatus: protectedProcedure
+      .input(z.object({ id: z.number(), status: z.enum(['pending', 'approved', 'rejected']) }))
+      .mutation(async ({ ctx, input }) => {
+        if (ctx.user?.role !== 'admin') throw new Error('Forbidden');
+        const db = await getDb();
+        if (!db) throw new Error('Database unavailable');
+        await db.update(waitlist).set({ status: input.status }).where(eq(waitlist.id, input.id));
+        return { success: true };
+      }),
   }),
 
   /**

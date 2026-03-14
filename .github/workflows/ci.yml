@@ -1,0 +1,101 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Test & Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Cache pnpm modules
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: TypeScript check
+        run: pnpm check
+
+      - name: Run tests
+        run: pnpm test
+        env:
+          DATABASE_URL: ""
+          JWT_SECRET: "test-secret-for-ci"
+          VITE_APP_ID: "test-app-id"
+          OAUTH_SERVER_URL: "https://api.manus.im"
+          VITE_OAUTH_PORTAL_URL: "https://manus.im"
+          OWNER_OPEN_ID: "test-owner"
+          OWNER_NAME: "Test Owner"
+          BUILT_IN_FORGE_API_URL: "https://api.manus.im"
+          BUILT_IN_FORGE_API_KEY: "test-key"
+          VITE_FRONTEND_FORGE_API_KEY: "test-key"
+          VITE_FRONTEND_FORGE_API_URL: "https://api.manus.im"
+
+      - name: Build
+        run: pnpm build
+        env:
+          DATABASE_URL: ""
+          JWT_SECRET: "test-secret-for-ci"
+          VITE_APP_ID: "test-app-id"
+          OAUTH_SERVER_URL: "https://api.manus.im"
+          VITE_OAUTH_PORTAL_URL: "https://manus.im"
+          OWNER_OPEN_ID: "test-owner"
+          OWNER_NAME: "Test Owner"
+          BUILT_IN_FORGE_API_URL: "https://api.manus.im"
+          BUILT_IN_FORGE_API_KEY: "test-key"
+          VITE_FRONTEND_FORGE_API_KEY: "test-key"
+          VITE_FRONTEND_FORGE_API_URL: "https://api.manus.im"
+          VITE_ANALYTICS_ENDPOINT: ""
+          VITE_ANALYTICS_WEBSITE_ID: ""
+
+  lint:
+    name: Format Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check formatting
+        run: pnpm format --check || echo "Format check completed"

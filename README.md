@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663342337625/biHYpnWi4gbAo4jVFbvk4g/IMG_6643-Kp3nMiPdBgPbBGhXBRVjFJ.webp" alt="Zero AI Logo" width="120" />
+<img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663342337625/biHYpnWi4gbAo4jVFbvk4g/zero-ai-logo_a8c58afd.webp" alt="Zero AI Logo" width="120" />
 
 # Zero AI
 
@@ -10,6 +10,7 @@
 
 Zero AI turns AI into a system that works *with* you — on your terms, governed by your rules, not prompts.
 
+[![CI](https://github.com/ZeroAI99/zero-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/ZeroAI99/zero-ai/actions/workflows/ci.yml)
 [![Website](https://img.shields.io/badge/Website-zeroai.vip-00ff88?style=flat-square&logo=globe)](https://zeroai.vip)
 [![X (Twitter)](https://img.shields.io/badge/Follow-%40_zeroai-black?style=flat-square&logo=x)](https://x.com/_zeroai)
 [![GitHub](https://img.shields.io/badge/GitHub-ZeroAI99-181717?style=flat-square&logo=github)](https://github.com/ZeroAI99)
