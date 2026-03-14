@@ -9,16 +9,12 @@ export default function Footer() {
       <div className="container">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           {/* Brand */}
-          <div className="flex items-center gap-2.5">
-            <div className="w-6 h-6 rounded-sm bg-[oklch(0.76_0.18_155)] flex items-center justify-center">
-              <span className="text-[oklch(0.07_0.008_265)] font-bold text-xs" style={{ fontFamily: "'Syne', sans-serif" }}>Z</span>
-            </div>
-            <span
-              className="text-[oklch(0.93_0.005_265)] font-semibold text-sm tracking-widest uppercase"
-              style={{ fontFamily: "'Syne', sans-serif", letterSpacing: "0.18em" }}
-            >
-              Zero AI
-            </span>
+          <div className="flex items-center gap-2">
+            <img
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663342337625/biHYpnWi4gbAo4jVFbvk4g/zero-ai-logo_a8c58afd.webp"
+              alt="Zero AI Logo"
+              className="w-8 h-8 object-contain"
+            />
           </div>
 
           {/* Links */}

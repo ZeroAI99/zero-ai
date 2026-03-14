@@ -62,17 +62,13 @@ export default function Navbar() {
           <a
             href="#"
             onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-            className="flex items-center gap-2.5 group"
+            className="flex items-center gap-2 group"
           >
-            <div className="w-6 h-6 rounded-sm bg-[oklch(0.76_0.18_155)] flex items-center justify-center">
-              <span className="text-[oklch(0.07_0.008_265)] font-bold text-xs" style={{ fontFamily: "'Syne', sans-serif" }}>Z</span>
-            </div>
-            <span
-              className="text-[oklch(0.93_0.005_265)] font-semibold text-sm tracking-widest uppercase"
-              style={{ fontFamily: "'Syne', sans-serif", letterSpacing: "0.18em" }}
-            >
-              Zero AI
-            </span>
+            <img
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663342337625/biHYpnWi4gbAo4jVFbvk4g/zero-ai-logo_a8c58afd.webp"
+              alt="Zero AI Logo"
+              className="w-8 h-8 object-contain"
+            />
           </a>
 
           {/* Desktop Nav */}

@@ -87,6 +87,15 @@ export default function IntroScreen({ onEnter }: IntroScreenProps) {
 
       <div className="relative z-10 w-full max-w-lg px-6 flex flex-col items-center text-center">
 
+        {/* Logo */}
+        <div className="mb-8">
+          <img
+            src="https://d2xsxph8kpxj0f.cloudfront.net/310519663342337625/biHYpnWi4gbAo4jVFbvk4g/zero-ai-logo_a8c58afd.webp"
+            alt="Zero AI"
+            className="w-20 h-20 object-contain mx-auto"
+          />
+        </div>
+
         {/* Terminal lines */}
         <div className="w-full mb-8 text-left">
           <p
