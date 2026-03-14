@@ -1050,49 +1050,149 @@ export default function Home() {
       </Section>
 
       {/* ─── CTA ──────────────────────────────────────────────────────────── */}
-      <Section id="cta" className="py-32 border-t border-white/[0.06]">
+      <Section id="cta" className="py-24 border-t border-white/[0.06]">
         <div className="container">
-          <div className="max-w-2xl">
-            <div className="flex items-center gap-3 mb-8">
-              <span className="section-number">Ready to own your AI?</span>
-              <span className="accent-line" />
+          <div className="flex flex-col items-center text-center">
+
+            {/* JOIN THE JOURNEY label */}
+            <div className="mb-8">
+              <span
+                className="inline-block border border-white/[0.15] px-4 py-1.5 text-xs tracking-[0.2em] uppercase text-[oklch(0.45_0.008_265)]"
+                style={{ fontFamily: "'IBM Plex Mono', monospace" }}
+              >
+                JOIN THE JOURNEY
+              </span>
             </div>
+
+            {/* Headline */}
             <h2
-              className="font-bold leading-tight mb-4"
+              className="font-bold leading-tight mb-3"
               style={{
                 fontFamily: "'Syne', sans-serif",
-                fontSize: "clamp(2rem, 4vw, 3.5rem)",
+                fontSize: "clamp(2.25rem, 5vw, 4rem)",
                 color: "oklch(0.93 0.005 265)",
               }}
             >
-              Ready to own your{" "}
-              <span style={{ color: "oklch(0.76 0.18 155)" }}>AI infrastructure?</span>
+              Ready to own
             </h2>
-            <p
-              className="text-[oklch(0.55_0.01_265)] leading-relaxed mb-10 text-lg"
-              style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300 }}
+            <h2
+              className="font-bold leading-tight mb-6"
+              style={{
+                fontFamily: "'Syne', sans-serif",
+                fontSize: "clamp(2.25rem, 5vw, 4rem)",
+                color: "oklch(0.76 0.18 155)",
+              }}
             >
-              Built for founders, operators, and creators with too much context.
-            </p>
+              your AI?
+            </h2>
 
-            {/* Email form */}
-            <div className="flex flex-col sm:flex-row gap-3 max-w-md">
-              <input
-                type="email"
-                placeholder="your@email.com"
-                className="flex-1 bg-[oklch(0.1_0.008_265)] border border-white/[0.1] rounded-sm px-4 py-3 text-sm text-[oklch(0.85_0.005_265)] placeholder:text-[oklch(0.35_0.006_265)] focus:outline-none focus:border-[oklch(0.76_0.18_155/0.5)] transition-colors"
-                style={{ fontFamily: "'DM Sans', sans-serif" }}
-              />
-              <button className="btn-primary whitespace-nowrap">
-                Request Early Access →
-              </button>
-            </div>
             <p
-              className="text-xs text-[oklch(0.35_0.006_265)] mt-3"
+              className="text-[oklch(0.5_0.008_265)] leading-relaxed mb-10 max-w-md text-sm"
               style={{ fontFamily: "'IBM Plex Mono', monospace" }}
             >
-              No spam. No vendor lock-in. Just early access.
+              Zero AI is in active development. We're building the infrastructure for true human-AI partnership.
             </p>
+
+            {/* THIS IS FOR */}
+            <div className="w-full max-w-lg mb-6">
+              <div className="border border-white/[0.08] rounded-sm p-6">
+                <p
+                  className="text-xs text-[oklch(0.35_0.006_265)] tracking-[0.2em] uppercase mb-4"
+                  style={{ fontFamily: "'IBM Plex Mono', monospace" }}
+                >
+                  THIS IS FOR
+                </p>
+                <div className="flex flex-wrap justify-center gap-2">
+                  {["Founders", "Operators", "Creators", "Builders"].map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-4 py-1.5 border border-white/[0.12] text-xs text-[oklch(0.65_0.01_265)] rounded-sm"
+                      style={{ fontFamily: "'IBM Plex Mono', monospace" }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* CTA Button */}
+            <div className="w-full max-w-lg mb-4">
+              <div className="border border-[oklch(0.76_0.18_155/0.4)] rounded-sm p-5 bg-[oklch(0.76_0.18_155/0.04)]">
+                <a
+                  href="https://x.com/_zeroai"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full py-4 text-center font-semibold text-base tracking-wide transition-all duration-200 hover:bg-[oklch(0.76_0.18_155/0.08)] rounded-sm"
+                  style={{
+                    fontFamily: "'IBM Plex Mono', monospace",
+                    color: "oklch(0.76 0.18 155)",
+                    border: "1px solid oklch(0.76 0.18 155 / 0.5)",
+                  }}
+                >
+                  Request Early Access →
+                </a>
+                <p
+                  className="text-xs text-[oklch(0.35_0.006_265)] mt-3 text-center"
+                  style={{ fontFamily: "'IBM Plex Mono', monospace" }}
+                >
+                  We'll respond within 48h
+                </p>
+              </div>
+            </div>
+
+            {/* OR CONNECT DIRECTLY */}
+            <div className="w-full max-w-lg">
+              <p
+                className="text-xs text-[oklch(0.35_0.006_265)] tracking-[0.15em] uppercase mb-4"
+                style={{ fontFamily: "'IBM Plex Mono', monospace" }}
+              >
+                OR CONNECT DIRECTLY
+              </p>
+              <div className="flex flex-wrap justify-center gap-3">
+                <a
+                  href="https://x.com/_zeroai"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2 border border-white/[0.1] rounded-sm text-xs text-[oklch(0.55_0.01_265)] hover:text-[oklch(0.76_0.18_155)] hover:border-[oklch(0.76_0.18_155/0.3)] transition-all duration-200"
+                  style={{ fontFamily: "'IBM Plex Mono', monospace" }}
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                  </svg>
+                  @_zeroai
+                </a>
+                <a
+                  href="#"
+                  className="flex items-center gap-2 px-4 py-2 border border-white/[0.1] rounded-sm text-xs text-[oklch(0.55_0.01_265)] hover:text-[oklch(0.76_0.18_155)] hover:border-[oklch(0.76_0.18_155/0.3)] transition-all duration-200"
+                  style={{ fontFamily: "'IBM Plex Mono', monospace" }}
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                  </svg>
+                  LinkedIn
+                </a>
+                <a
+                  href="#"
+                  className="flex items-center gap-2 px-4 py-2 border border-white/[0.1] rounded-sm text-xs text-[oklch(0.55_0.01_265)] hover:text-[oklch(0.76_0.18_155)] hover:border-[oklch(0.76_0.18_155/0.3)] transition-all duration-200"
+                  style={{ fontFamily: "'IBM Plex Mono', monospace" }}
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+                  </svg>
+                  WhatsApp
+                </a>
+              </div>
+            </div>
+
+            {/* Tagline */}
+            <p
+              className="mt-12 text-xs text-[oklch(0.3_0.006_265)] italic"
+              style={{ fontFamily: "'IBM Plex Mono', monospace" }}
+            >
+              The future of AI is not assistance — it's partnership.
+            </p>
+
           </div>
         </div>
       </Section>
