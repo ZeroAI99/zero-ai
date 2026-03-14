@@ -5,6 +5,8 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
+import IntroScreen from "./components/IntroScreen";
+import { useState } from "react";
 
 function Router() {
   return (
@@ -17,11 +19,16 @@ function Router() {
 }
 
 function App() {
+  const [introVisible, setIntroVisible] = useState(true);
+
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
           <Toaster />
+          {introVisible && (
+            <IntroScreen onEnter={() => setIntroVisible(false)} />
+          )}
           <Router />
         </TooltipProvider>
       </ThemeProvider>
